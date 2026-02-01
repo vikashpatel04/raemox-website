@@ -1,0 +1,6 @@
+export { AboutHero } from "./AboutHero"
+export { MetricsStrip } from "./MetricsStrip"
+export { WhoWeAre } from "./WhoWeAre"
+export { ExpertiseGrid } from "./ExpertiseGrid"
+export { EdgeFirst } from "./EdgeFirst"
+export { AboutCTA } from "./AboutCTA"

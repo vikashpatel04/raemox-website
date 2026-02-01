@@ -1,0 +1,6 @@
+export { HeroSection } from "./HeroSection"
+export { TrustIndicators } from "./TrustIndicators"
+export { CapabilitiesGrid } from "./CapabilitiesGrid"
+export { EdgeAdvantage } from "./EdgeAdvantage"
+export { CaseStudy } from "./CaseStudy"
+export { BlogInsights } from "./BlogInsights"
