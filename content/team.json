@@ -1,0 +1,30 @@
+[
+    {
+        "id": "raemox-team",
+        "name": "RaeMox Team",
+        "role": "Engineering Team",
+        "avatar": "/team/raemox-team.jpg",
+        "profileUrl": "/about",
+        "bio": "Building the future of edge AI solutions."
+    },
+    {
+        "id": "vikash",
+        "name": "Vikash Patel",
+        "role": "Senior Engineer",
+        "avatar": "/team/vikash.jpg",
+        "profileUrl": "https://linkedin.com/in/vikash",
+        "bio": "Passionate about edge computing and AI optimization.",
+        "social": {
+            "linkedin": "https://linkedin.com/in/vikash",
+            "github": "https://github.com/vikash"
+        }
+    },
+    {
+        "id": "Member-2",
+        "name": "Member-2",
+        "role": "test guy",
+        "avatar": "/team/raemox-team.jpg",
+        "profileUrl": "/about",
+        "bio": "Building the future of edge AI solutions."
+    }
+]

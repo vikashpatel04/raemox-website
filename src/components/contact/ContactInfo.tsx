@@ -1,5 +1,6 @@
 import { IconMail, IconBrandGithub, IconBrandLinkedin, IconHeadset } from "@tabler/icons-react"
 import { siteConfig } from "@/config/site"
+import { Card, CardContent } from "@/components/ui/card"
 
 const contactMethods = [
     {
@@ -55,19 +56,23 @@ export function ContactInfo() {
                         href={method.href}
                         target={method.href.startsWith("http") ? "_blank" : undefined}
                         rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="flex items-start gap-4 p-4 rounded-lg bg-card border hover:border-primary hover:shadow-lg hover:shadow-primary/5 transition-all group"
                     >
-                        <div className="p-2 rounded bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                            <method.icon className="size-5" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="font-bold text-sm">{method.title}</span>
-                            <span className="text-xs text-muted-foreground">{method.description}</span>
-                            <span className="text-sm text-primary mt-1">{method.value}</span>
-                        </div>
+                        <Card className="h-full hover:border-primary hover:shadow-lg hover:shadow-primary/5 transition-all group">
+                            <CardContent className="flex items-start gap-4 p-4">
+                                <div className="p-2 rounded bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                                    <method.icon className="size-5" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="font-bold text-sm">{method.title}</span>
+                                    <span className="text-xs text-muted-foreground">{method.description}</span>
+                                    <span className="text-sm text-primary mt-1">{method.value}</span>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </a>
                 ))}
             </div>
         </div>
     )
 }
+

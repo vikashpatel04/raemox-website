@@ -1,4 +1,5 @@
 import { IconCpu, IconLayoutGrid, IconDeviceDesktop } from "@tabler/icons-react"
+import { Badge } from "@/components/ui/badge"
 
 export function EdgeAdvantage() {
     return (
@@ -7,9 +8,9 @@ export function EdgeAdvantage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Text Content */}
                     <div>
-                        <div className="inline-block px-3 py-1 rounded bg-primary/10 text-primary text-xs font-mono mb-4">
+                        <Badge variant="secondary" className="mb-4">
                             ARCHITECTURE v3.0
-                        </div>
+                        </Badge>
                         <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
                             The Edge Advantage
                         </h2>

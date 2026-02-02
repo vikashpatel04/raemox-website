@@ -1,5 +1,9 @@
-import { useState } from "react"
-import { IconPlus, IconMinus } from "@tabler/icons-react"
+import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from "@/components/ui/accordion"
 
 const faqItems = [
     {
@@ -25,8 +29,6 @@ const faqItems = [
 ]
 
 export function FAQ() {
-    const [openIndex, setOpenIndex] = useState<number | null>(0)
-
     return (
         <section className="py-16 px-6">
             <div className="max-w-3xl mx-auto">
@@ -34,38 +36,20 @@ export function FAQ() {
                     Frequently Asked Questions
                 </h2>
 
-                <div className="flex flex-col gap-3">
+                <Accordion type="single" collapsible defaultValue="item-0" className="w-full">
                     {faqItems.map((item, index) => (
-                        <div
-                            key={index}
-                            className="border rounded-lg overflow-hidden"
-                        >
-                            <button
-                                type="button"
-                                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="w-full flex items-center justify-between p-4 text-left hover:bg-muted/50 transition-colors"
-                            >
-                                <span className="font-medium pr-4">{item.question}</span>
-                                {openIndex === index ? (
-                                    <IconMinus className="size-5 text-primary flex-shrink-0" />
-                                ) : (
-                                    <IconPlus className="size-5 text-muted-foreground flex-shrink-0" />
-                                )}
-                            </button>
-
-                            {/* Answer */}
-                            <div
-                                className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-96" : "max-h-0"
-                                    }`}
-                            >
-                                <div className="p-4 pt-0 text-sm text-muted-foreground border-t bg-muted/30">
-                                    {item.answer}
-                                </div>
-                            </div>
-                        </div>
+                        <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg mb-3 px-4">
+                            <AccordionTrigger className="text-left font-medium">
+                                {item.question}
+                            </AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground">
+                                {item.answer}
+                            </AccordionContent>
+                        </AccordionItem>
                     ))}
-                </div>
+                </Accordion>
             </div>
         </section>
     )
 }
+

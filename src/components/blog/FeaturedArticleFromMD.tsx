@@ -9,10 +9,12 @@ interface FeaturedArticleFromMDProps {
 }
 
 export function FeaturedArticleFromMD({ post }: FeaturedArticleFromMDProps) {
-    // Use placeholder if image path is relative
+    // Use actual image path - images starting with "/" are from public folder
     const imageUrl = post.image.startsWith("http")
         ? post.image
-        : `https://placehold.co/800x400/1a1a2e/3b82f6?text=${encodeURIComponent(post.title.slice(0, 20))}`
+        : post.image.startsWith("/")
+            ? post.image  // Use public folder image directly
+            : `https://placehold.co/800x400/1a1a2e/3b82f6?text=${encodeURIComponent(post.title.slice(0, 20))}`
 
     return (
         <section className="px-6 pb-12">
@@ -32,9 +34,11 @@ export function FeaturedArticleFromMD({ post }: FeaturedArticleFromMDProps) {
 
                         {/* Content */}
                         <div className="p-8 flex flex-col justify-center">
-                            <div className="flex items-center gap-3 mb-4">
+                            <div className="flex items-center gap-3 mb-4 flex-wrap">
                                 <Badge variant="default" className="text-xs">Featured</Badge>
-                                <Badge variant="secondary" className="text-xs">{post.category}</Badge>
+                                {post.categories.map((cat) => (
+                                    <Badge key={cat} variant="secondary" className="text-xs">{cat}</Badge>
+                                ))}
                             </div>
 
                             <h2 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-primary transition-colors">
@@ -47,7 +51,7 @@ export function FeaturedArticleFromMD({ post }: FeaturedArticleFromMDProps) {
 
                             <div className="flex items-center justify-between">
                                 <div className="text-sm text-muted-foreground">
-                                    <span>{post.author}</span>
+                                    <span>{post.authorDetails.map(a => a.name).join(", ")}</span>
                                     <span className="mx-2">•</span>
                                     <span>{formatDate(post.date)}</span>
                                     <span className="mx-2">•</span>

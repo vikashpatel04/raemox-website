@@ -7,6 +7,7 @@ import {
     IconMicrophone,
     IconEye
 } from "@tabler/icons-react"
+import { Badge } from "@/components/ui/badge"
 
 const technologies = [
     { name: "Qualcomm NPU", icon: IconCpu },
@@ -31,16 +32,18 @@ export function TechStack() {
 
                 <div className="flex flex-wrap gap-3 md:w-2/3 justify-start md:justify-end">
                     {technologies.map((tech) => (
-                        <div
+                        <Badge
                             key={tech.name}
-                            className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-card border pl-3 pr-4 hover:border-primary/50 transition-colors"
+                            variant="outline"
+                            className="h-10 gap-2 px-4 hover:border-primary/50 transition-colors"
                         >
                             <tech.icon className="size-5 text-primary" />
-                            <p className="text-sm font-medium">{tech.name}</p>
-                        </div>
+                            <span className="text-sm font-medium">{tech.name}</span>
+                        </Badge>
                     ))}
                 </div>
             </div>
         </section>
     )
 }
+

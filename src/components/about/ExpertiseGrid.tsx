@@ -1,4 +1,5 @@
 import { IconCpu, IconStack2, IconCar, IconRocket } from "@tabler/icons-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 
 const expertise = [
     {
@@ -36,24 +37,27 @@ export function ExpertiseGrid() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {expertise.map((item) => (
-                        <div
+                        <Card
                             key={item.title}
-                            className="group flex flex-col gap-4 p-6 rounded-lg border bg-card hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 relative overflow-hidden"
+                            className="group hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 relative overflow-hidden"
                         >
                             {/* Decorative corner */}
                             <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors" />
 
-                            <item.icon className="size-10 text-primary" />
-                            <div>
+                            <CardHeader className="pb-2">
+                                <item.icon className="size-10 text-primary" />
+                            </CardHeader>
+                            <CardContent>
                                 <h3 className="text-lg font-bold mb-2">{item.title}</h3>
                                 <p className="text-sm text-muted-foreground leading-relaxed">
                                     {item.description}
                                 </p>
-                            </div>
-                        </div>
+                            </CardContent>
+                        </Card>
                     ))}
                 </div>
             </div>
         </section>
     )
 }
+

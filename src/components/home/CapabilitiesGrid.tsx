@@ -6,6 +6,8 @@ import {
     IconEye,
     IconArrowRight
 } from "@tabler/icons-react"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 const capabilities = [
     {
@@ -49,44 +51,48 @@ export function CapabilitiesGrid() {
                             Our engineering stack is optimized for low-latency, high-throughput edge environments.
                         </p>
                     </div>
-                    <Link
-                        to="/services"
-                        className="text-primary hover:text-primary/80 font-medium flex items-center gap-1 group"
-                    >
-                        Explore all services
-                        <IconArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                    <Button variant="link" asChild>
+                        <Link to="/services" className="group">
+                            Explore all services
+                            <IconArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                    </Button>
                 </div>
 
                 {/* Capabilities Cards Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {capabilities.map((cap) => (
-                        <div
+                        <Card
                             key={cap.title}
-                            className="group relative p-6 rounded-xl bg-card border hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10"
+                            className="group hover:border-primary/50 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10"
                         >
-                            {/* Icon */}
-                            <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                                <cap.icon className="size-6" />
-                            </div>
+                            <CardHeader className="pb-2">
+                                {/* Icon */}
+                                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+                                    <cap.icon className="size-6" />
+                                </div>
+                                <h3 className="text-xl font-bold">{cap.title}</h3>
+                            </CardHeader>
 
-                            {/* Title & Description */}
-                            <h3 className="text-xl font-bold mb-2">{cap.title}</h3>
-                            <p className="text-sm text-muted-foreground mb-4">{cap.description}</p>
+                            <CardContent className="pt-0">
+                                <p className="text-sm text-muted-foreground mb-4">{cap.description}</p>
 
-                            {/* Tags */}
-                            <ul className="text-xs text-muted-foreground space-y-1 font-mono">
-                                {cap.tags.map((tag) => (
-                                    <li key={tag} className="flex items-center gap-2">
-                                        <span className="w-1 h-1 bg-primary rounded-full" />
-                                        {tag}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                                {/* Tags as unordered list */}
+                                <ul className="text-xs text-muted-foreground space-y-1">
+                                    {cap.tags.map((tag) => (
+                                        <li key={tag} className="flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 bg-primary rounded-full shrink-0" />
+                                            {tag}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
                     ))}
                 </div>
             </div>
         </section>
     )
 }
+
+

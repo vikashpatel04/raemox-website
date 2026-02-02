@@ -1,4 +1,5 @@
 import type { BlogPost, BlogFrontmatter } from "./types"
+import { getTeamMembers, getDefaultMember } from "../team"
 
 // Import all markdown files from content/blog using Vite's glob import
 const blogFiles = import.meta.glob("/content/blog/*.md", {
@@ -11,7 +12,7 @@ const blogFiles = import.meta.glob("/content/blog/*.md", {
  * Simple browser-compatible frontmatter parser
  * Parses YAML-like frontmatter between --- delimiters
  */
-function parseFrontmatter(content: string): { data: Record<string, string | boolean>; content: string } {
+function parseFrontmatter(content: string): { data: Record<string, string | boolean | string[]>; content: string } {
     const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/
     const match = content.match(frontmatterRegex)
 
@@ -23,7 +24,7 @@ function parseFrontmatter(content: string): { data: Record<string, string | bool
     const markdownContent = match[2]
 
     // Parse simple YAML key: value pairs
-    const data: Record<string, string | boolean> = {}
+    const data: Record<string, string | boolean | string[]> = {}
     const lines = frontmatterBlock.split("\n")
 
     for (const line of lines) {
@@ -37,6 +38,19 @@ function parseFrontmatter(content: string): { data: Record<string, string | bool
         if ((value.startsWith('"') && value.endsWith('"')) ||
             (value.startsWith("'") && value.endsWith("'"))) {
             value = value.slice(1, -1)
+        }
+
+        // Parse JSON arrays like ["vikash", "raemox-team"]
+        if (value.startsWith("[") && value.endsWith("]")) {
+            try {
+                const parsed = JSON.parse(value)
+                if (Array.isArray(parsed)) {
+                    data[key] = parsed
+                    continue
+                }
+            } catch {
+                // Not valid JSON, treat as string
+            }
         }
 
         // Parse booleans
@@ -59,15 +73,45 @@ function parseMarkdownFile(slug: string, content: string): BlogPost {
     const { data, content: markdownContent } = parseFrontmatter(content)
     const frontmatter = data as unknown as BlogFrontmatter
 
+    // Handle both legacy single author and new authors array format
+    let authorIds: string[]
+    if (frontmatter.authors && Array.isArray(frontmatter.authors)) {
+        authorIds = frontmatter.authors
+    } else if (frontmatter.author) {
+        // Legacy format: try to match author name to team member ID
+        // If it's already an ID, use it; otherwise default to "raemox-team"
+        authorIds = [frontmatter.author.toLowerCase().replace(/\s+/g, "-")]
+    } else {
+        authorIds = ["raemox-team"]
+    }
+
+    // Resolve author IDs to team member details
+    const authorDetails = getTeamMembers(authorIds)
+    // If no members found, use default
+    const resolvedDetails = authorDetails.length > 0
+        ? authorDetails
+        : [getDefaultMember()]
+
+    // Handle both legacy single category and new categories array format
+    let categories: string[]
+    if (frontmatter.categories && Array.isArray(frontmatter.categories)) {
+        categories = frontmatter.categories
+    } else if (frontmatter.category) {
+        categories = [frontmatter.category]
+    } else {
+        categories = ["Uncategorized"]
+    }
+
     return {
         slug,
         title: frontmatter.title || "Untitled",
         excerpt: frontmatter.excerpt || "",
-        category: frontmatter.category || "Uncategorized",
+        categories,
         date: frontmatter.date || new Date().toISOString().split("T")[0],
         readTime: frontmatter.readTime || "5 min read",
         image: frontmatter.image || "",
-        author: frontmatter.author || "RaeMox Team",
+        authors: authorIds,
+        authorDetails: resolvedDetails,
         featured: frontmatter.featured ?? false,
         content: markdownContent,
     }
@@ -118,7 +162,7 @@ export function getFeaturedPost(): BlogPost | undefined {
 export function getPostsByCategory(category: string): BlogPost[] {
     const posts = getAllPosts()
     if (category === "All") return posts
-    return posts.filter(post => post.category === category)
+    return posts.filter(post => post.categories.includes(category))
 }
 
 /**
@@ -126,7 +170,7 @@ export function getPostsByCategory(category: string): BlogPost[] {
  */
 export function getCategories(): string[] {
     const posts = getAllPosts()
-    const categories = new Set(posts.map(post => post.category))
+    const categories = new Set(posts.flatMap(post => post.categories))
     return ["All", ...Array.from(categories)]
 }
 

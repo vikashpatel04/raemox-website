@@ -5,8 +5,8 @@ category: "Research"
 date: "2023-11-15"
 readTime: "15 min read"
 image: "/blog/heterogeneous-compute.jpg"
-author: "RaeMox Team"
-featured: true
+author: "vikash"
+featured: false
 ---
 
 # Heterogeneous Compute for Edge AI: A Practical Guide

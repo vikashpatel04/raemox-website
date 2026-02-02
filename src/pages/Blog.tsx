@@ -12,23 +12,42 @@ import type { Article } from "@/components/blog"
 
 export default function Blog() {
     const [filter, setFilter] = useState("All")
+    const [searchQuery, setSearchQuery] = useState("")
 
     // Get posts from markdown files
     const allPosts = getAllPosts()
     const featuredPost = getFeaturedPost()
     const categories = getCategories()
 
-    // Filter posts (exclude featured from main grid)
+    // Only show featured section when "All" is selected and no search
+    const showFeaturedSection = filter === "All" && !searchQuery && featuredPost
+
+    // Filter posts - only exclude featured from grid when showing featured section
     const filteredPosts = allPosts
-        .filter(post => !post.featured || post.slug !== featuredPost?.slug)
-        .filter(post => filter === "All" || post.category === filter)
+        .filter(post => {
+            // Exclude featured post from grid only when featured section is shown
+            if (showFeaturedSection && post.slug === featuredPost?.slug) {
+                return false
+            }
+            return true
+        })
+        .filter(post => filter === "All" || post.categories.includes(filter))
+        .filter(post => {
+            if (!searchQuery) return true
+            const query = searchQuery.toLowerCase()
+            return (
+                post.title.toLowerCase().includes(query) ||
+                post.excerpt.toLowerCase().includes(query) ||
+                post.categories.some(cat => cat.toLowerCase().includes(query))
+            )
+        })
 
     // Transform to Article type for ArticleCard
     const articles: Article[] = filteredPosts.map(post => ({
         id: post.slug,
         title: post.title,
         excerpt: post.excerpt,
-        category: post.category,
+        category: post.categories[0] || "Uncategorized",  // Use first category for card
         date: formatDate(post.date),
         readTime: post.readTime,
         image: post.image,
@@ -38,13 +57,15 @@ export default function Blog() {
         <main className="flex-1">
             <BlogHero />
 
-            {featuredPost && (
+            {showFeaturedSection && (
                 <FeaturedArticleFromMD post={featuredPost} />
             )}
 
             <FilterBar
                 categories={categories}
                 onFilterChange={setFilter}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
             />
 
             {/* Articles Grid */}

@@ -1,5 +1,6 @@
 import { IconBrandGithub, IconBrandLinkedin, IconBrandTwitter, IconExternalLink } from "@tabler/icons-react"
 import { siteConfig } from "@/config/site"
+import { Button } from "@/components/ui/button"
 
 const links = [
     {
@@ -30,20 +31,21 @@ export function CommunityLinks() {
 
                 <div className="flex flex-wrap justify-center gap-4">
                     {links.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-card border hover:border-primary hover:text-primary transition-colors"
-                        >
-                            <link.icon className="size-5" />
-                            <span className="font-medium">{link.label}</span>
-                            <IconExternalLink className="size-4 text-muted-foreground" />
-                        </a>
+                        <Button key={link.label} variant="outline" size="lg" asChild>
+                            <a
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <link.icon className="size-5" />
+                                <span className="font-medium">{link.label}</span>
+                                <IconExternalLink className="size-4 text-muted-foreground" />
+                            </a>
+                        </Button>
                     ))}
                 </div>
             </div>
         </section>
     )
 }
+
