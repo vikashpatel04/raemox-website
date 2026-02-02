@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom"
-import { useTheme } from "@/hooks/useTheme"
 import { siteConfig } from "@/config/site"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler"
 import {
-    IconSun,
-    IconMoon,
     IconBrandGithub,
     IconBrandLinkedin,
     IconBrandTwitter,
@@ -15,7 +13,6 @@ import {
 
 export function Footer() {
     const currentYear = new Date().getFullYear()
-    const { theme, toggleTheme } = useTheme()
 
     return (
         <footer className="border-t bg-muted/30 pt-16 pb-8">
@@ -153,18 +150,8 @@ export function Footer() {
                             Terms of Service
                         </Link>
 
-                        {/* Theme Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-lg hover:bg-muted transition-colors"
-                            aria-label="Toggle theme"
-                        >
-                            {theme === "dark" ? (
-                                <IconSun className="w-5 h-5" />
-                            ) : (
-                                <IconMoon className="w-5 h-5" />
-                            )}
-                        </button>
+                        {/* Animated Theme Toggle */}
+                        <AnimatedThemeToggler className="p-2 rounded-lg hover:bg-muted transition-colors" />
                     </div>
                 </div>
             </div>

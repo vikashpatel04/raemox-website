@@ -1,3 +1,4 @@
+import { SEOHead } from "@/components/SEOHead"
 import {
     HeroSection,
     TrustIndicators,
@@ -9,13 +10,19 @@ import {
 
 export default function Home() {
     return (
-        <main className="flex-1">
-            <HeroSection />
-            <TrustIndicators />
-            <CapabilitiesGrid />
-            <EdgeAdvantage />
-            <CaseStudy />
-            <BlogInsights />
-        </main>
+        <>
+            <SEOHead
+                url="/"
+                description="RaeMox is an engineering studio focused on building intelligence for constrained machines. We specialize in Edge AI, robotics, and Qualcomm platform optimization."
+            />
+            <main className="flex-1">
+                <HeroSection />
+                <TrustIndicators />
+                <CapabilitiesGrid />
+                <EdgeAdvantage />
+                <CaseStudy />
+                <BlogInsights />
+            </main>
+        </>
     )
 }

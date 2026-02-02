@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { SEOHead } from "@/components/SEOHead"
 import { Button } from "@/components/ui/button"
 import {
     BlogHero,
@@ -54,47 +55,55 @@ export default function Blog() {
     }))
 
     return (
-        <main className="flex-1">
-            <BlogHero />
-
-            {showFeaturedSection && (
-                <FeaturedArticleFromMD post={featuredPost} />
-            )}
-
-            <FilterBar
-                categories={categories}
-                onFilterChange={setFilter}
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
+        <>
+            <SEOHead
+                title="Blog"
+                url="/blog"
+                description="Explore RaeMox's insights on Edge AI, robotics, vSLAM, and Qualcomm platform optimization. Technical articles on neural networks, autonomous navigation, and embedded systems."
+                keywords={["Edge AI Blog", "Robotics Articles", "Qualcomm Development", "vSLAM Tutorials"]}
             />
+            <main className="flex-1">
+                <BlogHero />
 
-            {/* Articles Grid */}
-            <section className="px-6 pb-12">
-                <div className="max-w-7xl mx-auto">
-                    {articles.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {articles.map((article) => (
-                                <ArticleCard key={article.id} article={article} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 text-muted-foreground">
-                            No articles found in this category.
-                        </div>
-                    )}
+                {showFeaturedSection && (
+                    <FeaturedArticleFromMD post={featuredPost} />
+                )}
 
-                    {/* Load More Button - for future pagination */}
-                    {articles.length >= 6 && (
-                        <div className="mt-12 text-center">
-                            <Button variant="outline" size="lg">
-                                Load More Articles
-                            </Button>
-                        </div>
-                    )}
-                </div>
-            </section>
+                <FilterBar
+                    categories={categories}
+                    onFilterChange={setFilter}
+                    searchQuery={searchQuery}
+                    onSearchChange={setSearchQuery}
+                />
 
-            <CommunityLinks />
-        </main>
+                {/* Articles Grid */}
+                <section className="px-6 pb-12">
+                    <div className="max-w-7xl mx-auto">
+                        {articles.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {articles.map((article) => (
+                                    <ArticleCard key={article.id} article={article} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-12 text-muted-foreground">
+                                No articles found in this category.
+                            </div>
+                        )}
+
+                        {/* Load More Button - for future pagination */}
+                        {articles.length >= 6 && (
+                            <div className="mt-12 text-center">
+                                <Button variant="outline" size="lg">
+                                    Load More Articles
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                </section>
+
+                <CommunityLinks />
+            </main>
+        </>
     )
 }

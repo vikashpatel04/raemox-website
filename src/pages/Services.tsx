@@ -1,3 +1,4 @@
+import { SEOHead } from "@/components/SEOHead"
 import {
     ServicesHero,
     ServiceCards,
@@ -8,12 +9,20 @@ import {
 
 export default function Services() {
     return (
-        <main className="flex-1">
-            <ServicesHero />
-            <ServiceCards />
-            <ProcessTimeline />
-            <TechStack />
-            <ServicesCTA />
-        </main>
+        <>
+            <SEOHead
+                title="Services"
+                url="/services"
+                description="RaeMox offers Edge AI consulting, neural network optimization, vSLAM implementation, and robotics engineering. Specialized in Qualcomm NPU, DSP, and HTP architectures."
+                keywords={["Edge AI Services", "Neural Network Optimization", "Robotics Consulting", "Qualcomm Development"]}
+            />
+            <main className="flex-1">
+                <ServicesHero />
+                <ServiceCards />
+                <ProcessTimeline />
+                <TechStack />
+                <ServicesCTA />
+            </main>
+        </>
     )
 }
