@@ -1,15 +1,11 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { NeuralBackground } from "@/components/home/NeuralBackground"
+import { LightRays } from "@/components/ui/light-rays"
 
 export function HeroSection() {
     return (
-        <section className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center">
-            <NeuralBackground
-                beamCount={5}
-                spawnInterval={1500}
-                beamDuration={[4, 8]}
-            />
+        <section className="relative flex min-h-screen -mt-16 pt-16 items-center justify-center overflow-hidden">
+            <LightRays />
 
             {/* Hero Content */}
             <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
