@@ -1,31 +1,19 @@
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
+import { NeuralBackground } from "@/components/home/NeuralBackground"
 
 export function HeroSection() {
     return (
         <section className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center">
-            {/* Background with grid pattern */}
-            <div
-                className="absolute inset-0 z-0 opacity-30 dark:opacity-20"
-                style={{
-                    backgroundImage: "radial-gradient(circle at 50% 50%, hsl(var(--primary) / 0.3) 1px, transparent 1px)",
-                    backgroundSize: "40px 40px",
-                }}
+            <NeuralBackground
+                beamCount={5}
+                spawnInterval={1500}
+                beamDuration={[4, 8]}
             />
-            <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
 
             {/* Hero Content */}
             <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-                {/* Status Badge */}
-                <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 mb-6 backdrop-blur-sm">
-                    <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
-                    </span>
-                    <span className="text-xs font-medium text-primary uppercase tracking-wider">
-                        System Online v2.4
-                    </span>
-                </div>
+
 
                 {/* Main Headline */}
                 <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl mb-6">
