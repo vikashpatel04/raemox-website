@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { IconSearch, IconCommand } from "@tabler/icons-react"
@@ -17,12 +17,12 @@ export function FilterBar({
     onSearchChange
 }: FilterBarProps) {
     const [activeCategory, setActiveCategory] = useState("All")
-    const [isMac, setIsMac] = useState(false)
     const searchInputRef = useRef<HTMLInputElement>(null)
 
     // Detect if user is on Mac for proper keyboard shortcut display
-    useEffect(() => {
-        setIsMac(navigator.platform.toUpperCase().indexOf('MAC') >= 0)
+    const isMac = useMemo(() => {
+        if (typeof navigator === "undefined") return false
+        return navigator.platform.toUpperCase().indexOf('MAC') >= 0
     }, [])
 
     // Handle Ctrl+K / Cmd+K keyboard shortcut
