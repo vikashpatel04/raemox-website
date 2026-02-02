@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import { createBrowserRouter } from "react-router-dom"
 import { RootLayout } from "@/components/layout"
 import { ErrorBoundary } from "@/components/ErrorBoundary"
-import { PageLoader } from "@/components/ui/PageLoader"
+import { LazyPage } from "@/components/LazyPage"
 
 // Lazy load all pages for code splitting
 const Home = lazy(() => import("@/pages/Home"))
@@ -12,15 +12,6 @@ const Blog = lazy(() => import("@/pages/Blog"))
 const BlogPost = lazy(() => import("@/pages/BlogPost"))
 const Contact = lazy(() => import("@/pages/Contact"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
-
-// Wrapper to add Suspense to lazy components
-function LazyPage({ children }: { children: React.ReactNode }) {
-    return (
-        <Suspense fallback={<PageLoader />}>
-            {children}
-        </Suspense>
-    )
-}
 
 export const router = createBrowserRouter([
     {
